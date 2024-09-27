@@ -9,6 +9,7 @@
             "GET" => [
                 "/",
                 "/cadastro",
+                "/dashboard"
             ],
             "POST" => [
                 "/",
@@ -25,12 +26,26 @@
                     else if($uri == "/cadastro"){
                         $this->cadastro();
                     }
+                    else if($uri == "/dashboard"){
+                        $this->dashboard();
+                    }
                     else
                     {
                         $this->error();
                     }
                     break;
                 case "POST":
+                    if($uri == "/cadastro")
+                    {
+                        $form_data = array(
+                            "name" => $_POST["name"],
+                            "password" => $_POST["password"],
+                            "password2" => $_POST["password2"],
+                            "phone" => $_POST["phone"],
+                            "email" => $_POST["email"]
+                        );
+                        $this->signin($form_data);
+                    }
                     break;
                 default:
                     break;

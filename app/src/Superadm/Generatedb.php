@@ -12,14 +12,15 @@ use PDOException;
         private $connection;
         private $db_name;
         private $client;
-        private $client_password;
-
-        public function __construct($db_name,$client,$client_password)
+        private $client_email;
+        private $client_phonenumber;
+        public function __construct($db_name,$client,$client_email, $client_phonenumber)
         {
             $this->connection = Connection::getInstance();
             $this->db_name = $db_name;
             $this->client = $client;
-            $this->client_password = $client_password;
+            $this->client_email = $client_email;
+            $this->client_phonenumber = $client_phonenumber;
         }
         
 
@@ -28,11 +29,12 @@ use PDOException;
             try{
                 $sql = "CREATE DATABASE IF NOT EXISTS ".$this->db_name;
                 $this->connection->exec($sql);
-                echo "database and user created !";
             }catch(Exception $e){
                 echo $e->getMessage();
                 echo "<br></br>";
+                return false;
             }
+            return true;
         }
 
         public function generate_tables()
@@ -44,22 +46,24 @@ use PDOException;
             }catch(PDOException $e){
                 echo "<br></br>";
                 echo $e->getMessage();
+                return false;
             }
             //cria tabela adm
             $sql = "
                 CREATE TABLE IF NOT EXISTS Dono (
                     id INT AUTO_INCREMENT PRIMARY KEY,
                     username VARCHAR(100) NOT NULL,
-                    email VARCHAR(100) NOT NULL
+                    email VARCHAR(100) NOT NULL,
+                    celular VARCHAR(100) NOT NULL
                 ) ENGINE=INNODB;
             ";
 
             try {
                 $this->connection->exec($sql);
-                echo "Table 'Dono' created successfully.";
             } catch (\PDOException $e) {
                 echo "<br></br>";
                 echo "Error creating table: Dono" . $e->getMessage();
+                return false;
             }
 
             $sql = "
@@ -72,10 +76,10 @@ use PDOException;
 
             try {
                 $this->connection->exec($sql);
-                echo "Table 'servicos' created successfully.";
             } catch (\PDOException $e) {
                 echo "<br></br>";
                 echo "Error creating table: servicos" . $e->getMessage();
+                return false;
             }
 
             $sql = "
@@ -89,10 +93,10 @@ use PDOException;
 
             try {
                 $this->connection->exec($sql);
-                echo "Table 'horariotrabalho' created successfully.";
             } catch (\PDOException $e) {
                 echo "<br></br>";
                 echo "Error creating table: horariotrabalho" . $e->getMessage();
+                return false;
             }
 
             $sql = "
@@ -110,14 +114,14 @@ use PDOException;
 
             try {
                 $this->connection->exec($sql);
-                echo "Table 'dia_semana_trabalhada' created successfully.";
             } catch (\PDOException $e) {
                 echo "<br></br>";
                 echo "Error creating table: dia_semana_trabalhada" . $e->getMessage();
+                return false;
             }
 
             $sql = "
-                CREATE TABLE IF NOT EXISTS cliente (
+                CREATE TABLE IF NOT EXISTS clientes (
                     id INT AUTO_INCREMENT PRIMARY KEY,
                     nome VARCHAR(100) NOT NULL,
                     email VARCHAR(100) NOT NULL,
@@ -127,10 +131,10 @@ use PDOException;
 
             try {
                 $this->connection->exec($sql);
-                echo "Table 'cliente' created successfully.";
             } catch (\PDOException $e) {
                 echo "<br></br>";
                 echo "Error creating table: cliente " . $e->getMessage();
+                return false;
             }
 
             $sql = "
@@ -140,18 +144,39 @@ use PDOException;
                     horario TIME NOT NULL,
                     data Date NOT NULL,
                     id_servico INT NOT NULL,
-                    FOREIGN KEY (id_cliente) REFERENCES cliente(id) ON DELETE CASCADE,
+                    FOREIGN KEY (id_cliente) REFERENCES clientes(id) ON DELETE CASCADE,
                     FOREIGN KEY (id_servico) REFERENCES servicos(id) ON DELETE CASCADE
                 ) ENGINE=INNODB;
             ";
 
             try {
                 $this->connection->exec($sql);
-                echo "Table 'horario_reservado' created successfully.";
             } catch (\PDOException $e) {
                 echo "<br></br>";
                 echo "Error creating table: horario_reservado" . $e->getMessage();
+                return false;
             }
+            try{
+                $sql = "INSERT INTO Dono (username, email, celular) VALUES (?,?,?)";
+                $stmt = $this->connection->prepare($sql);
+                $stmt->execute([$this->client,$this->client_email,$this->client_phonenumber]);
+            }catch(Exception $e){
+                echo "<br></br>";
+                echo $e->getMessage();
+            }
+            return true;
+        }
+        public function generate(){
+            $result = $this->generate_database();
+            if($result == false){
+                return false;
+            }
+            $result2 = $this->generate_tables();
+            if($result2 == false){
+                return false;
+            }
+            return true;
+
         }
     }
 

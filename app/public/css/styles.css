@@ -1,0 +1,48 @@
+:root{
+    --item: #ffd60a;
+    --background: #1f1f1f;
+    --text-color: #e9e9e9;
+    --item2: #d6a354;
+}
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    color: var(--text-color);
+    font-family: "Public Sans", sans-serif;
+}
+
+body{
+    background-color: var(--background);
+    display: flex;
+    padding: 20px;
+}
+
+div{
+    width: 50%;
+    height: 80%;
+}
+
+div img{
+    width: 100%;
+    border-radius: 10px;
+}
+
+.item2 form{
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  height: 250px;
+  justify-content: space-evenly;
+  
+}
+
+form input{
+    padding: 10px;
+    color: var(--background);
+}
+
+form input[type=submit]{
+    color: var(--background);
+}
+

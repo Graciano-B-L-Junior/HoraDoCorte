@@ -1,11 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/styles.css">
+    <title>Home</title>
 </head>
 <body>
-    <h1>oi</h1>
+    <div class="item1">
+        <img src="./imgs/pic1.jpg" alt="" srcset="">
+    </div>
+    <div class="item2">
+        <form action="/cadastro" method="post">
+            <label for="name">Nome (sem acento) </label>
+            <input type="text" name="name" id="name" required>
+            <label for="password">senha</label>
+            <input type="password" name="password" id="password" required>
+            <label for="password2">Repita a senha</label>
+            <input type="password" name="password2" id="password2" required>
+            <label for="email">E-mail</label>
+            <input type="email" name="email" id="email" required>
+            <label for="phone">Celular</label>
+            <input type="text" name="phone" id="phone" required placeholder="Ex: (85)9xxxx-xxxx">
+            <input type="submit" value="Cadastrar">
+        </form>
+    </div>
 </body>
 </html>
