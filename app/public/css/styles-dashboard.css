@@ -1,0 +1,59 @@
+
+body, html{
+    height: 100%;
+}
+body{
+    padding: 20px;
+    margin: 0;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: 20% 40% 40%;
+    grid-template-rows: 7% 1fr 1fr;
+    grid-template-areas: 
+    "nav header header"
+    "nav section section"
+    "nav section section";
+}
+nav{
+    height: 100%;
+    grid-area: nav;
+    padding: 10px;
+}
+nav ul{
+    list-style-type: none;
+    height: 40%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+nav ul a{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+}
+
+nav ul a p{
+    width: 80%;
+    font-size: 20px;
+    text-align: right;
+}
+
+header{
+    grid-area: header;
+}
+
+section
+{
+    grid-area: section;
+}
+
+ion-icon {
+    font-size: 40px;
+  }
+
+  header{
+    padding: 10px;
+  }

@@ -32,7 +32,6 @@ div img{
   display: flex;
   flex-direction: column;
   width: 60%;
-  height: 250px;
   justify-content: space-evenly;
   
 }
@@ -44,5 +43,10 @@ form input{
 
 form input[type=submit]{
     color: var(--background);
+}
+
+ul#error{
+    list-style-position: inside;
+    display: none;
 }
 

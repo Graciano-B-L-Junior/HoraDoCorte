@@ -28,27 +28,34 @@
             require __DIR__ . '/pages/dashboard.html';
         }
 
+        protected function servicos()
+        {
+            require __DIR__ . '/pages/dashboard/servicos.html';
+        }
+
 
         //POST
         //CADASTRO DE DONO
+        //
         protected function signin($form_data){
+            
             $name_upper =strtoupper(explode(" ",$form_data["name"])[0]);
             $name = explode(" ",$form_data["name"])[0];
             $pass1 = $form_data["password"];
             $pass2 = $form_data["password2"];
             $phone = $form_data["phone"];
             if($pass1 != $pass2){
-
+                return false;
             }
             $email = $form_data["email"];
 
             $instance = new GenerateDB($name_upper,$name,$email,$phone);
 
             if($instance->generate()){
-                header("Location: /dashboard");
+                return true;
             }
             else{
-                echo "deu ruim";
+                return false;
             }
             
         }

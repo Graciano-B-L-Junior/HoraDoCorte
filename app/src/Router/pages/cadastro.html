@@ -1,11 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" integrity="sha512-pHVGpX7F/27yZ0ISY+VVjyULApbDlD0/X0rgGbTqCE7WFW5MezNTWG/dnhtbBuICzsd0WQPgpE4REBLv+UqChw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="./css/styles.css">
+    <script src="./js/script.js"></script>
     <title>Cadastro</title>
 </head>
 <body>
-    <h1>Cadastro</h1>
+    <div class="item1">
+        <img src="./imgs/pic1.jpg" alt="" srcset="">
+    </div>
+    <div class="item2">
+        <ul id="error">
+            <h2>Ocorreu um erro</h2>
+            <p>Verifique se o formulário está correto</p>
+            <li>A senhas devem ser iguais</li>
+            <li>email preenchido corretamente</li>
+            <li>celular preenchido corretamente</li>
+            <li>Se preencheu o nome sem acento</li>
+        </ul>
+        <form action="/cadastro" method="post">
+            <label for="name">Nome (sem acento) </label>
+            <input type="text" name="name" id="name" required>
+            <label for="password">senha</label>
+            <input type="password" name="password" id="password" required>
+            <label for="password2">Repita a senha</label>
+            <input type="password" name="password2" id="password2" required>
+            <label for="email">E-mail</label>
+            <input type="email" name="email" id="email" required>
+            <label for="phone">Celular</label>
+            <input type="text" name="phone" id="phone" required placeholder="Ex: (85)9xxxx-xxxx">
+            <input id="submit" type="submit" value="Cadastrar">
+        </form>
+        
+    </div>
 </body>
 </html>
