@@ -61,6 +61,21 @@
                             echo json_encode(["error" => true]);
                         }
                     }
+                    else if($uri == $this->routes["servicos"])
+                    {
+                        header('content-type: application/json');
+                        
+                        if($this->register_service($_POST))
+                        {
+                            http_response_code(200);
+                            echo json_encode("serviços criados com sucesso");
+                        }
+                        else
+                        {
+                            http_response_code(404);
+                            echo json_encode("falha ao criar os serviços");
+                        }
+                    }
                     break;
                 default:
                     break;

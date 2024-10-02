@@ -1,7 +1,9 @@
 <?php
     namespace Router;
     include_once '../src/Superadm/Generatedb.php';
+    include_once '../src/Superadm/DB.php';
     use superadm\GenerateDB;
+    use Database\DB;
     abstract class RouterSwitch{
 
         //GET
@@ -58,6 +60,13 @@
                 return false;
             }
             
+        }
+        //TODO
+        //colocar segurança no sistema
+        //fazer sanitização do algoritimo
+        protected function register_service($form_data)
+        {
+            return DB::create_services($form_data);
         }
         
     }
