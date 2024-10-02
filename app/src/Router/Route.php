@@ -17,6 +17,7 @@
         ];
 
         public function route($uri,$method){
+            
             switch($method){
 
                 case "GET":
@@ -63,7 +64,7 @@
                     }
                     else if($uri == $this->routes["servicos"])
                     {
-                        header('content-type: application/json');
+                        // header('content-type: application/json');
                         
                         if($this->register_service($_POST))
                         {
