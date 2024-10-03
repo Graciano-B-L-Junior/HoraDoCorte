@@ -13,43 +13,33 @@ class DB
         {
             $connection = Connection::getInstance();
             $sql = "INSERT INTO servicos (nome, valor) VALUES (:nome, :valor)";
-            $params = [];
             $connection->exec("use GRACIANO");
             $stmt = $connection->prepare($sql);
-            foreach($request_data as $key => $value)
-            {
+            $final_param = [];
+            
+            array_map(function($key,$value) use(&$final_param){
+                $arr = [$key => $value];
                 if (preg_match('/\bvalor\b/', $key))
                 {
-
-                    array_push($params,[$key => number_format(floatval($value),2)]);
+                    $result = (float)$value;
+                    $index = count($final_param)-1;
+                    array_push($final_param[$index],$result);
+                    return $result;
                 }
                 else
                 {
-                    array_push($params,[$key => $value]);
+                    array_push($final_param,[$value]);
+                    return $value;
                 }
-            }
-            $param_number=0;
-            var_dump($params);
-            echo "<br></br>";
-            foreach($params as $data)
+            },array_keys($request_data),array_values($request_data));
+            
+            foreach($final_param as $data)
             {
-                var_dump($data);
-                echo "<br></br>";
-                if($param_number != 0)
-                {
-                    $stmt->execute(
-                        ["nome" => $data["servico-$param_number"], "valor" => $data["valor-$param_number"] ]
-                    );
-                }
-                else
-                {
-                    $stmt->execute(
-                        ["nome" => $data["servico"], "valor" => $data["valor"] ]
-                    );
-                }
-                $param_number+=1;
+                $stmt->execute(
+                    ["nome" => $data[0], "valor" => $data[1] ]
+                );
+                
             }
-
 
             return true;
 
