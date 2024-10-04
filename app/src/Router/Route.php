@@ -6,13 +6,14 @@
     class Router extends RouterSwitch{
         
         public $routes = [
-            "home"      =>  "/",
-            "cadastro"  =>  "/cadastro",
-            "dashboard" =>  "/dashboard",
-            "servicos"  =>  "/dashboard/servicos",
-            "dias_de_trabalho" => "/dashboard/dias_de_trabalho",
-            "proximos_clientes" => "/dashboard/proximos_clientes",
-            "clientes"  =>  "/dashboard/clientes",
+            "home"                  =>  "/",
+            "cadastro"              =>  "/cadastro",
+            "dashboard"             =>  "/dashboard",
+            "servicos"              =>  "/dashboard/servicos",
+            "dias_de_trabalho"      => "/dashboard/dias_de_trabalho",
+            "proximos_clientes"     => "/dashboard/proximos_clientes",
+            "clientes"              =>  "/dashboard/clientes",
+            "quantidade_clientes"   => "/dashboard/quantidade_clientes",
             
         ];
 
@@ -34,6 +35,16 @@
                     {
                         $this->servicos();
                     }
+                    else if($uri == $this->routes["quantidade_clientes"])
+                    {
+                        header('content-type: application/json');
+                        $result = $this->get_total_clients();
+                        echo json_encode(["result" => $result]);
+                    }
+                    else if($uri == $this->routes["dias_de_trabalho"])
+                    {
+                        $this->dias_de_trabalho();
+                    }
                     else
                     {
                         $this->error();
@@ -54,6 +65,7 @@
                         
                         if($this->signin($form_data))
                         {
+                            setcookie("user_database",strtoupper($form_data["name"]),strtotime('+1 day'),"/", "", false, true);
                             echo json_encode(['redirect' => $this->routes["dashboard"]]);
                         }
                         else

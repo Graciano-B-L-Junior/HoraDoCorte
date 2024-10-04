@@ -54,6 +54,25 @@ class DB
         }
 
     }
+    static public function get_total_clients($user_database)
+    {
+        try
+        {
+            $connection = Connection::getInstance();
+            $sql = "use $user_database";
+            $connection->exec($sql);
+            $sql = "SELECT COUNT('nome') FROM clientes";
+            $stmt = $connection->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetchColumn();
+            return $result;
+        }
+        catch(Exception $e)
+        {
+            return $e->getMessage();
+        }
+        
+    }
 }
 
 ?>

@@ -35,6 +35,11 @@
             require __DIR__ . '/pages/dashboard/servicos.html';
         }
 
+        protected function dias_de_trabalho()
+        {
+            require __DIR__ . '/pages/dashboard/dias_de_trabalho.html';
+        }
+
 
         //POST
         //CADASTRO DE DONO
@@ -67,6 +72,12 @@
         protected function register_service($form_data)
         {
             return DB::create_services($form_data);
+        }
+
+        protected function get_total_clients()
+        {
+            $database = $_COOKIE["user_database"];
+            return DB::get_total_clients($database);
         }
         
     }
