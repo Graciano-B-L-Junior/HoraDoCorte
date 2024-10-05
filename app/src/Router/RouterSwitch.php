@@ -79,6 +79,12 @@
             $database = $_COOKIE["user_database"];
             return DB::get_total_clients($database);
         }
+
+        protected function register_work_and_hour_days($request)
+        {
+            $database = $_COOKIE["user_database"];
+            return DB::register_work_and_hour_day($database,$request);
+        }
         
     }
 ?>

@@ -10,9 +10,11 @@
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/styles-dashboard.css">
+    <link rel="stylesheet" href="../css/styles-dias_de_trabalho.css">
     <!-- <link rel="stylesheet" href="../css/styles-servicos.css"> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" integrity="sha512-pHVGpX7F/27yZ0ISY+VVjyULApbDlD0/X0rgGbTqCE7WFW5MezNTWG/dnhtbBuICzsd0WQPgpE4REBLv+UqChw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="../js/script_dia_trabalho.js"></script>
     <!-- <script src="../js/script_servicos.js"></script> -->
     <title>Servicos</title>
 </head>
@@ -50,8 +52,95 @@
         <h1>Bem-vindo! Cabeça de gelo</h1>
     </header>
     <section class="servicos">
+        <p id="alerta-horario">Preencha ao menos 1 caixa com horário</p>
+        <p id="alerta-semana">Preencha ao menos 1 caixa com o dia da semana</p>
         <form id="form-servicos" method="post">
-            
+            <p>Toque na caixa para marcar o horario em que você vai estar disponível</p>
+            <table class="horario">
+                <tr>
+                    <th>Horario</th>
+                    <th>Sim/Não</th>
+                </tr>
+                <tr>
+                    <td>08:00</td>
+                    <td><input type="checkbox" name="08:00" id="08_00"></td>
+                </tr>
+                <tr>
+                    <td>09:00</td>
+                    <td><input type="checkbox" name="09:00" id="09_00"></td>
+                </tr>
+                <tr>
+                    <td>10:00</td>
+                    <td><input type="checkbox" name="10:00" id="10_00"></td>
+                </tr>
+                <tr>
+                    <td>11:00</td>
+                    <td><input type="checkbox" name="11:00" id="11_00"></td>
+                </tr>
+                <tr>
+                    <td>12:00</td>
+                    <td><input type="checkbox" name="12:00" id="12_00"></td>
+                </tr>
+                <tr>
+                    <td>13:00</td>
+                    <td><input type="checkbox" name="13:00" id="13_00"></td>
+                </tr>
+                <tr>
+                    <td>14:00</td>
+                    <td><input type="checkbox" name="14:00" id="14_00"></td>
+                </tr>
+                <tr>
+                    <td>15:00</td>
+                    <td><input type="checkbox" name="15:00" id="15_00"></td>
+                </tr>
+                <tr>
+                    <td>16:00</td>
+                    <td><input type="checkbox" name="16:00" id="16_00"></td>
+                </tr>
+                <tr>
+                    <td>17:00</td>
+                    <td><input type="checkbox" name="17:00" id="17_00"></td>
+                </tr>
+                <tr>
+                    <td>18:00</td>
+                    <td><input type="checkbox" name="18:00" id="18_00"></td>
+                </tr>
+            </table>
+            <table class="dia_semana">
+                <tr>
+                    <th>Dia da semana</th>
+                    <th>Sim/Não</th>
+                </tr>
+                <tr>
+                    <td>Segunda</td>
+                    <td><input type="checkbox" name="seg" id="segunda"></td>
+                </tr>
+                <tr>
+                    <td>Terça</td>
+                    <td><input type="checkbox" name="ter" id="terca"></td>
+                </tr>
+                <tr>
+                    <td>Quarta</td>
+                    <td><input type="checkbox" name="qua" id="quarta"></td>
+                </tr>
+                <tr>
+                    <td>Quinta</td>
+                    <td><input type="checkbox" name="qui" id="quinta"></td>
+                </tr>
+                <tr>
+                    <td>Sexta</td>
+                    <td><input type="checkbox" name="sex" id="sexta"></td>
+                </tr>
+                <tr>
+                    <td>Sábado</td>
+                    <td><input type="checkbox" name="sab" id="sabado"></td>
+                </tr>
+                <tr>
+                    <td>Domingo</td>
+                    <td><input type="checkbox" name="dom" id="domingo"></td>
+                </tr>
+            </table>
+            <input id="register" type="submit" value="Registrar">
         </form>
     </section>
     

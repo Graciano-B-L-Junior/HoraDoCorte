@@ -102,13 +102,13 @@ use PDOException;
             $sql = "
                 CREATE TABLE IF NOT EXISTS dia_semana_trabalhada (
                     id INT AUTO_INCREMENT PRIMARY KEY,
-                    seg BIT NOT NULL,
-                    ter BIT NOT NULL,
-                    qua BIT NOT NULL,
-                    qui BIT NOT NULL,
-                    sex BIT NOT NULL,
-                    sab BIT NOT NULL,
-                    dom BIT NOT NULL
+                    seg TINYINT(1) NOT NULL,
+                    ter TINYINT(1) NOT NULL,
+                    qua TINYINT(1) NOT NULL,
+                    qui TINYINT(1) NOT NULL,
+                    sex TINYINT(1) NOT NULL,
+                    sab TINYINT(1) NOT NULL,
+                    dom TINYINT(1) NOT NULL
                 ) ENGINE=INNODB;
             ";
 

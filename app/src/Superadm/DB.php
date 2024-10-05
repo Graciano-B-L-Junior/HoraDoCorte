@@ -73,6 +73,61 @@ class DB
         }
         
     }
+
+    static public function register_work_and_hour_day($user_database,$request_data)
+    {
+        try
+        {
+            $connection = Connection::getInstance();
+            $arr_hours = [];
+            $arr_week_days = [];
+            $pattern_1 = '/\d{2}:\d{2}/';
+            $pattern_2 = '/[a-z]+/';
+
+            
+            foreach($request_data as $key => $value)
+            {
+                
+                if(preg_match($pattern_1,$key))
+                {
+                    $arr_hours[$key] = (int)$value;
+                    // array_push($arr_hours,[$key => 1]);
+                }
+                else if(preg_match($pattern_2,$key))
+                {
+                    $arr_week_days[$key] = (int)$value;
+                }
+            }
+            
+            $sql = "use $user_database";
+            $connection->exec($sql);
+            
+            $sql = "INSERT INTO dia_semana_trabalhada (seg,ter,qua,qui,sex,sab,dom) VALUES (:seg,:ter,:qua,:qui,:sex,:sab,:dom)";
+
+            $stmt = $connection->prepare($sql);
+            $stmt->execute(
+                [
+                    "seg" => $arr_week_days["seg"],
+                    "ter" => $arr_week_days["ter"],
+                    "qua" => $arr_week_days["qua"],
+                    "qui" => $arr_week_days["qui"],
+                    "sex" => $arr_week_days["sex"],
+                    "sab" => $arr_week_days["sab"],
+                    "dom" => $arr_week_days["dom"]
+                ]
+            );            
+            return true;
+        }
+        catch(Exception $e)
+        {
+            var_dump($arr_week_days);
+            echo "<br></br>";
+            var_dump($arr_week_days["seg"]);
+            echo "<br></br>";
+            echo $e->getMessage();
+            return $e->getMessage();
+        }
+    }
 }
 
 ?>

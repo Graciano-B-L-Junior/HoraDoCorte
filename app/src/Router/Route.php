@@ -89,6 +89,18 @@
                             echo json_encode("falha ao criar os serviços");
                         }
                     }
+                    else if($uri == $this->routes["dias_de_trabalho"])
+                    {
+                        
+                        if($this->register_work_and_hour_days($_POST)== true)
+                        {
+                            http_response_code(200);
+                        }
+                        else
+                        {
+                            http_response_code(404);
+                        }
+                    }
                     break;
                 default:
                     break;
