@@ -41,6 +41,13 @@
         }
 
 
+        //clientes
+        protected function agenda()
+        {
+            require __DIR__ . '/pages/clientes/agenda.html';
+        }
+
+
         //POST
         //CADASTRO DE DONO
         //
@@ -59,7 +66,8 @@
             $instance = new GenerateDB($name_upper,$name,$email,$phone);
 
             if($instance->generate()){
-                return true;
+                $result = DB::insert_cliente_in_gerencia($name_upper) ?? false;
+                return $result;
             }
             else{
                 return false;

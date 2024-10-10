@@ -29,6 +29,7 @@ use PDOException;
             try{
                 $sql = "CREATE DATABASE IF NOT EXISTS ".$this->db_name;
                 $this->connection->exec($sql);
+                setcookie("user_database",$this->db_name, strtotime( '+1 days' ));
             }catch(Exception $e){
                 echo $e->getMessage();
                 echo "<br></br>";
@@ -87,7 +88,7 @@ use PDOException;
                     id INT AUTO_INCREMENT PRIMARY KEY,
                     incio TIME NOT NULL,
                     fim TIME NOT NULL,
-                    tempo_servico INT NOT NULL
+                    tempo_servico INT NOT NULL DEFAULT 30
                 ) ENGINE=INNODB;
             ";
 

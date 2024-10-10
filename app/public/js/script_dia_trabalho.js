@@ -5,16 +5,9 @@ $(document).ready(function () {
     console.log(alerta_horario)
     $("#register").on("click",function(e){
         e.preventDefault()
-        let all_horario_unchecked = true
         let all_semana_unchecked = true
         let formData = new FormData()
-        $(".horario input[type='checkbox']").each(function(){
-            if($(this).is(":checked"))
-            {
-                all_horario_unchecked = false
-            }
-            formData.append(this.name, $(this).is(':checked') ? '1' : '0')
-        })
+        
         $(".dia_semana input[type='checkbox']").each(function(){
             if($(this).is(":checked"))
             {
@@ -22,14 +15,9 @@ $(document).ready(function () {
             }
             formData.append(this.name, $(this).is(':checked') ? '1' : '0')
         })
-        if(all_horario_unchecked)
-        {
-            alerta_horario.css('display','block')
-        }
-        else
-        {
-            alerta_horario.css('display','none')
-        }
+        $("select").each(function(){
+            formData.append(this.name,$(this).val())
+        })
         if(all_semana_unchecked)
         {
             alerta_semana.css('display','block')
@@ -39,7 +27,7 @@ $(document).ready(function () {
             alerta_semana.css('display','none')
         }
 
-        if(all_horario_unchecked == false && all_semana_unchecked == false)
+        if(all_semana_unchecked == false)
         {   
             
             console.log(formData)

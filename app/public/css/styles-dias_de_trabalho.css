@@ -4,3 +4,7 @@
 #alerta-semana{
     display: none;
 }
+
+select{
+    background-color: blueviolet;
+}

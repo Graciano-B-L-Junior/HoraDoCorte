@@ -7,13 +7,42 @@ use \src\DB\Connection;
 class DB
 {
     private $connection;
+
+    static public function create_superadm_db()
+    {
+        try
+        {
+            $connection = Connection::getInstance();
+            $sql= "CREATE DATABASE IF NOT EXISTS GERENCIA";
+            $connection->exec($sql);
+
+            $sql = "use GERENCIA";
+            $connection->exec($sql);
+
+            $sql = "CREATE TABLE IF NOT EXISTS Clientes (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    cliente_database VARCHAR(100) NOT NULL)
+                    ";
+
+            $connection->exec($sql);
+
+            return true;
+        }
+        catch(Exception $e)
+        {
+            return false;
+        }
+    }
+
+
     static public function create_services($request_data)
     {
         try
         {
             $connection = Connection::getInstance();
             $sql = "INSERT INTO servicos (nome, valor) VALUES (:nome, :valor)";
-            $connection->exec("use GRACIANO");
+            $db_name = $_COOKIE["user_database"];
+            $connection->exec("use ".$db_name);
             $stmt = $connection->prepare($sql);
             $final_param = [];
             
@@ -88,9 +117,9 @@ class DB
             foreach($request_data as $key => $value)
             {
                 
-                if(preg_match($pattern_1,$key))
+                if(preg_match($pattern_1,$value))
                 {
-                    $arr_hours[$key] = (int)$value;
+                    $arr_hours[$key] = $value . ":00";
                     // array_push($arr_hours,[$key => 1]);
                 }
                 else if(preg_match($pattern_2,$key))
@@ -99,6 +128,7 @@ class DB
                 }
             }
             
+            var_dump($arr_hours);
             $sql = "use $user_database";
             $connection->exec($sql);
             
@@ -115,7 +145,19 @@ class DB
                     "sab" => $arr_week_days["sab"],
                     "dom" => $arr_week_days["dom"]
                 ]
-            );            
+            );
+            
+            
+            $sql = "INSERT INTO horariotrabalho (incio,fim) VALUES (:inicio, :fim)";
+
+            $stmt = $connection->prepare($sql);
+            $stmt->execute(
+                [
+                    "inicio"    => $arr_hours["inicio"],
+                    "fim"       => $arr_hours["fim"]
+                ]
+            );
+
             return true;
         }
         catch(Exception $e)
@@ -127,6 +169,48 @@ class DB
             echo $e->getMessage();
             return $e->getMessage();
         }
+    }
+
+    static public function insert_cliente_in_gerencia($cliente_db)
+    {
+        try
+        {
+            self::create_superadm_db();
+            $sql = "use GERENCIA";
+            $connection = Connection::getInstance();
+            $connection->exec($sql);
+
+            $sql = "INSERT INTO Clientes (cliente_database) VALUES (:cliente_database)";
+
+            $stmt = $connection->prepare($sql);
+            $stmt->execute(
+                [
+                    "cliente_database" => $cliente_db
+                ]
+            );
+            setcookie("user_database",$cliente_db,strtotime('+1 day'),"/", "", false, true);
+            return true;
+        }
+        catch(Exception $e)
+        {
+            echo "oi";
+            echo $e->getMessage();
+            return false;
+        }
+    }
+
+    static public function check_cliente_database($db_name)
+    {
+        $sql = "use GERENCIA";
+        $connection = Connection::getInstance();
+        $connection->exec($sql);
+
+        $sql = "SELECT * FROM Clientes WHERE cliente_database LIKE :data";
+        $stmt = $connection->prepare($sql);
+        $stmt->execute(
+            ["data" => "%".$db_name."%"]
+        );
+        $stmt->fetch();
     }
 }
 

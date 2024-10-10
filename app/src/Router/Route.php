@@ -15,6 +15,9 @@
             "clientes"              =>  "/dashboard/clientes",
             "quantidade_clientes"   => "/dashboard/quantidade_clientes",
             
+            "agenda"               => "/ref",
+            "agenda_dados"         => "/api/barbershop_data"
+            
         ];
 
         public function route($uri,$method){
@@ -45,6 +48,43 @@
                     {
                         $this->dias_de_trabalho();
                     }
+
+                    
+                    else if($uri == $this->routes["agenda"])
+                    {
+                        //link example: /ref?barbershop=GRACIANO
+                        $ref_db_user = false;
+                        
+                        if(isset($_GET['barbershop']))
+                        {
+                            $ref_db_user = $_GET['barbershop'];                            
+                        }
+                        
+                        if($ref_db_user==false)
+                        {
+                            $this->error();
+                        }
+                        else
+                        {
+                            $this->agenda();
+                        }
+                    }
+
+                    else if($uri == $this->routes["agenda_dados"])
+                    {
+                        header('content-type: application/json');
+                        if(isset($_GET['barbershop']))
+                        {
+                            $ref = $_GET['barbershop'];
+                        }
+                        else
+                        {
+                            http_response_code(404);
+                            echo json_encode("barbershop data isn't went referenced in http get");
+                        }
+                    }
+
+
                     else
                     {
                         $this->error();
@@ -54,7 +94,6 @@
                     if($uri == "/cadastro" || $uri == "cadastro")
                     {
                         header('content-type: application/json');
-
                         $form_data = array(
                             "name" => $_POST["name"],
                             "password" => $_POST["password"],
@@ -65,7 +104,7 @@
                         
                         if($this->signin($form_data))
                         {
-                            setcookie("user_database",strtoupper($form_data["name"]),strtotime('+1 day'),"/", "", false, true);
+                            http_response_code(200);
                             echo json_encode(['redirect' => $this->routes["dashboard"]]);
                         }
                         else
@@ -92,13 +131,16 @@
                     else if($uri == $this->routes["dias_de_trabalho"])
                     {
                         
+                        header('content-type: application/json');
                         if($this->register_work_and_hour_days($_POST)== true)
                         {
                             http_response_code(200);
+                            echo json_encode("ok");
                         }
                         else
                         {
                             http_response_code(404);
+                            echo json_encode("error");
                         }
                     }
                     break;

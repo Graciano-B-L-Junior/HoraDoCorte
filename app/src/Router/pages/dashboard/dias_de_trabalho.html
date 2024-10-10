@@ -56,7 +56,35 @@
         <p id="alerta-semana">Preencha ao menos 1 caixa com o dia da semana</p>
         <form id="form-servicos" method="post">
             <p>Toque na caixa para marcar o horario em que você vai estar disponível</p>
-            <table class="horario">
+            <label for="inicio">Inicio no expediente</label>
+            <select name="inicio" id="inicio">
+                <option selected>08:00</option>
+                <option>09:00</option>
+                <option>10:00</option>
+                <option>11:00</option>
+                <option>12:00</option>
+                <option>13:00</option>
+                <option>14:00</option>
+                <option>15:00</option>
+                <option>16:00</option>
+                <option>17:00</option>
+                <option>18:00</option>
+            </select>
+            <label for="fim">Fim do expediente</label>
+            <select name="fim" id="fim">
+                <option>08:00</option>
+                <option>09:00</option>
+                <option>10:00</option>
+                <option>11:00</option>
+                <option>12:00</option>
+                <option>13:00</option>
+                <option>14:00</option>
+                <option>15:00</option>
+                <option>16:00</option>
+                <option>17:00</option>
+                <option selected="selected">18:00</option>
+            </select>
+            <!-- <table class="horario">
                 <tr>
                     <th>Horario</th>
                     <th>Sim/Não</th>
@@ -105,7 +133,7 @@
                     <td>18:00</td>
                     <td><input type="checkbox" name="18:00" id="18_00"></td>
                 </tr>
-            </table>
+            </table> -->
             <table class="dia_semana">
                 <tr>
                     <th>Dia da semana</th>
