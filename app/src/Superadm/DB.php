@@ -4,6 +4,7 @@ include_once '../src/DB/banco.php';
 
 use Exception;
 use \src\DB\Connection;
+use \PDO;
 class DB
 {
     private $connection;
@@ -201,16 +202,62 @@ class DB
 
     static public function check_cliente_database($db_name)
     {
-        $sql = "use GERENCIA";
-        $connection = Connection::getInstance();
-        $connection->exec($sql);
+        try
+        {
+            $sql = "use GERENCIA";
+            $connection = Connection::getInstance();
+            $connection->exec($sql);
 
-        $sql = "SELECT * FROM Clientes WHERE cliente_database LIKE :data";
-        $stmt = $connection->prepare($sql);
-        $stmt->execute(
-            ["data" => "%".$db_name."%"]
-        );
-        $stmt->fetch();
+            $sql = "SELECT * FROM Clientes WHERE cliente_database LIKE :data";
+            $stmt = $connection->prepare($sql);
+            $stmt->execute(
+                ["data" => "%".$db_name."%"]
+            );
+            $result = $stmt->fetch();
+            return $result ? true : false;
+        }
+        catch(Exception $e)
+        {
+            echo $e->getMessage();
+            return false;
+        }
+        
+    }
+    static public function get_client_services_and_work_days_and_work_hours($db_name)
+    {
+        try
+        {
+            $sql = "use $db_name";
+            $connection = Connection::getInstance();
+            $connection->exec($sql);
+            
+            $services =[];
+            $dias_da_semana_que_trabalha=[];
+
+            $sql = "SELECT nome, valor FROM servicos";
+            $result = $connection->prepare($sql);
+            $result->execute();
+            $services=$result->fetchall(PDO::FETCH_ASSOC);
+
+            $sql = "SELECT seg,ter,qua,qui,sex,sab,dom FROM dia_semana_trabalhada";
+            $result = $connection->prepare($sql);
+            $result->execute();
+            $dias_da_semana_que_trabalha=$result->fetch(PDO::FETCH_ASSOC);
+
+            $response = $services + $dias_da_semana_que_trabalha;
+
+            // var_dump($response);
+            $response = json_encode($response);
+
+            return $response;
+            
+            
+        }
+        catch(Exception $e)
+        {
+            return false;
+        }
+        
     }
 }
 

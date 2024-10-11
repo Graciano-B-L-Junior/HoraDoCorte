@@ -93,6 +93,16 @@
             $database = $_COOKIE["user_database"];
             return DB::register_work_and_hour_day($database,$request);
         }
+
+        protected function check_client_database($db_name)
+        {
+            return DB::check_cliente_database($db_name);
+        }
+
+        protected function get_client_services_and_work_days_and_work_hours($db_name)
+        {
+            return DB::get_client_services_and_work_days_and_work_hours($db_name);
+        }
         
     }
 ?>
