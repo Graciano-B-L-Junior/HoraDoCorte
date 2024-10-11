@@ -54,16 +54,29 @@
         protected function signin($form_data){
             
             $name_upper =strtoupper(explode(" ",$form_data["name"])[0]);
+
+            $name_upper = htmlspecialchars($name_upper);
+            $email = htmlspecialchars($form_data["email"],ENT_QUOTES);
+
+            $email = filter_var($email,FILTER_SANITIZE_EMAIL);
+
+            if(!filter_var($email,FILTER_VALIDATE_EMAIL))
+            {
+                return false;
+            }
+            
             $name = explode(" ",$form_data["name"])[0];
-            $pass1 = $form_data["password"];
-            $pass2 = $form_data["password2"];
-            $phone = $form_data["phone"];
+            $name = htmlspecialchars($name,ENT_QUOTES);
+
+            $pass1 = htmlspecialchars($form_data["password"],ENT_QUOTES);
+            $pass2 = htmlspecialchars($form_data["password2"],ENT_QUOTES);
+            $phone = htmlspecialchars($form_data["phone"],ENT_QUOTES);
+
             if($pass1 != $pass2){
                 return false;
             }
-            $email = $form_data["email"];
-
-            $instance = new GenerateDB($name_upper,$name,$email,$phone);
+            $pass1 = password_hash($pass1,PASSWORD_DEFAULT);
+            $instance = new GenerateDB($name_upper,$name,$email,$phone,$pass1);
 
             if($instance->generate()){
                 $result = DB::insert_cliente_in_gerencia($name_upper) ?? false;

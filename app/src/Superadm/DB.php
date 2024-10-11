@@ -250,8 +250,6 @@ class DB
             $response = json_encode($response);
 
             return $response;
-            
-            
         }
         catch(Exception $e)
         {

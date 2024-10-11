@@ -14,13 +14,15 @@ use PDOException;
         private $client;
         private $client_email;
         private $client_phonenumber;
-        public function __construct($db_name,$client,$client_email, $client_phonenumber)
+        private $cliente_password;
+        public function __construct($db_name,$client,$client_email, $client_phonenumber, $cliente_password)
         {
             $this->connection = Connection::getInstance();
             $this->db_name = $db_name;
             $this->client = $client;
             $this->client_email = $client_email;
             $this->client_phonenumber = $client_phonenumber;
+            $this->cliente_password = $cliente_password;
         }
         
 
@@ -29,7 +31,7 @@ use PDOException;
             try{
                 $sql = "CREATE DATABASE IF NOT EXISTS ".$this->db_name;
                 $this->connection->exec($sql);
-                setcookie("user_database",$this->db_name, strtotime( '+1 days' ));
+                // setcookie("user_database",$this->db_name, strtotime( '+1 days' ));
             }catch(Exception $e){
                 echo $e->getMessage();
                 echo "<br></br>";
@@ -55,7 +57,8 @@ use PDOException;
                     id INT AUTO_INCREMENT PRIMARY KEY,
                     username VARCHAR(100) NOT NULL,
                     email VARCHAR(100) NOT NULL,
-                    celular VARCHAR(100) NOT NULL
+                    celular VARCHAR(100) NOT NULL,
+                    password VARCHAR(255) NOT NULL
                 ) ENGINE=INNODB;
             ";
 
@@ -158,9 +161,9 @@ use PDOException;
                 return false;
             }
             try{
-                $sql = "INSERT INTO Dono (username, email, celular) VALUES (?,?,?)";
+                $sql = "INSERT INTO Dono (username, email, celular, password) VALUES (?,?,?,?)";
                 $stmt = $this->connection->prepare($sql);
-                $stmt->execute([$this->client,$this->client_email,$this->client_phonenumber]);
+                $stmt->execute([$this->client,$this->client_email,$this->client_phonenumber,$this->cliente_password]);
             }catch(Exception $e){
                 echo "<br></br>";
                 echo $e->getMessage();

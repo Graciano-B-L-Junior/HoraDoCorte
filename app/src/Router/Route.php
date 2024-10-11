@@ -77,6 +77,7 @@
                         if(isset($_GET['barbershop']))
                         {
                             $ref = $_GET['barbershop'];
+                            $ref = htmlspecialchars($ref);
                             if($this->check_client_database($ref))
                             {
                                 $result = $this->get_client_services_and_work_days_and_work_hours($ref);
