@@ -1,0 +1,24 @@
+.agenda-form div#calendar{
+    height: auto;
+    width: 400px;
+}
+
+.agenda-form div *{
+    height: auto;
+    width: auto;
+}
+.air-datepicker.-inline-
+{
+    background-color:#1f1f1f;
+}
+.agenda-form .air-datepicker-cell.-focus-
+{
+    background-color: var(--item);
+    color: #1f1f1f;
+}
+
+.agenda-form .air-datepicker-cell.-other-month-.-focus-:hover
+{
+    background-color: var(--item);
+    color: #1f1f1f;
+}

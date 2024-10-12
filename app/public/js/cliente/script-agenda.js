@@ -1,16 +1,41 @@
+//Air calendar import
+const AirDatepicker = window.AirDatepicker;
+const localePTBR = {
+    days: ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'],
+    daysShort: ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sab'],
+    daysMin: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+    months: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+    monthsShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+    today: 'Hoje',
+    clear: 'Limpar',
+    dateFormat: 'dd/mm/yyyy',
+    timeFormat: 'hh:ii aa',
+    firstDay: 0
+};
+// const localeEn = window.air-datepicker.locale.en;
+
 $(document).ready(function () {
+    //variables for form construction;
     let dias_da_semana_que_trabalha = {}
     let servicos = {}
     let horario_inicio = ""
     let horairo_fim = ""
     let tempo_servico = ""
 
-    // Obter a query string da URL
+
+    //get full url
     const queryString = window.location.search;
 
-    // Criar um objeto URLSearchParams a partir da query string
+    //create url obj to get url param
     const urlParams = new URLSearchParams(queryString);
     const barbershop_param = urlParams.get('barbershop')
+
+    //Create calendar
+
+    let calendar = new AirDatepicker('#calendar', {
+        locale: localePTBR,
+        isMobile: true
+    })
 
     $.ajax({
         type: "GET",
@@ -19,7 +44,6 @@ $(document).ready(function () {
             barbershop: barbershop_param
         },
         success: function (response) {
-            console.log(response)
             for(let key in response)
             {
                 switch(key)
@@ -49,7 +73,7 @@ $(document).ready(function () {
                     
                 }
             }
-            
+            console.log(servicos)
             
         },
         error:function( jqXHR, textStatus, errorThrown){
