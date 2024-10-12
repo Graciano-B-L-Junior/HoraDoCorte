@@ -149,7 +149,7 @@ class DB
             );
             
             
-            $sql = "INSERT INTO horariotrabalho (incio,fim) VALUES (:inicio, :fim)";
+            $sql = "INSERT INTO horario_trabalho (inicio,fim) VALUES (:inicio, :fim)";
 
             $stmt = $connection->prepare($sql);
             $stmt->execute(
@@ -158,7 +158,6 @@ class DB
                     "fim"       => $arr_hours["fim"]
                 ]
             );
-
             return true;
         }
         catch(Exception $e)
@@ -244,15 +243,25 @@ class DB
             $result->execute();
             $dias_da_semana_que_trabalha=$result->fetch(PDO::FETCH_ASSOC);
 
-            $response = $services + $dias_da_semana_que_trabalha;
+            $sql = "SELECT inicio, fim, tempo_servico FROM horario_trabalho";
+            $stmt = $connection->prepare($sql);
+            $stmt->execute();
+
+            $horario_trabalho = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            
+
+            $response = $dias_da_semana_que_trabalha;
+            
 
             // var_dump($response);
-            $response = json_encode($response);
-
-            return $response;
+            $final_response = json_encode($response);
+            var_dump($final_response);
+            return $final_response;
         }
         catch(Exception $e)
         {
+            echo $e->getMessage();
             return false;
         }
         

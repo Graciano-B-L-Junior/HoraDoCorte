@@ -81,6 +81,7 @@
                             if($this->check_client_database($ref))
                             {
                                 $result = $this->get_client_services_and_work_days_and_work_hours($ref);
+                                echo $result;
                                 if($result == false)
                                 {
                                     http_response_code(404);

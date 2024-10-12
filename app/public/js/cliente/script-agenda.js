@@ -17,6 +17,7 @@ $(document).ready(function () {
             barbershop: barbershop_param
         },
         success: function (response) {
+            console.log(response)
             for(let key in response)
             {
                 switch(key)
@@ -31,9 +32,10 @@ $(document).ready(function () {
                         let dia = key
                         dias_da_semana_que_trabalha[`${dia}`] = response[key]
                     break;
+                    
                 }
             }
-            console.log(dias_da_semana_que_trabalha)
+            
         },
         error:function( jqXHR, textStatus, errorThrown){
             console.log("request failed")

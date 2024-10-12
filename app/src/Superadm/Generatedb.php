@@ -87,9 +87,9 @@ use PDOException;
             }
 
             $sql = "
-                CREATE TABLE IF NOT EXISTS horariotrabalho (
+                CREATE TABLE IF NOT EXISTS horario_trabalho (
                     id INT AUTO_INCREMENT PRIMARY KEY,
-                    incio TIME NOT NULL,
+                    inicio TIME NOT NULL,
                     fim TIME NOT NULL,
                     tempo_servico INT NOT NULL DEFAULT 30
                 ) ENGINE=INNODB;
