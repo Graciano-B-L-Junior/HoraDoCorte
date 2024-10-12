@@ -1,7 +1,9 @@
 $(document).ready(function () {
     let dias_da_semana_que_trabalha = {}
+    let servicos = {}
     let horario_inicio = ""
     let horairo_fim = ""
+    let tempo_servico = ""
 
     // Obter a query string da URL
     const queryString = window.location.search;
@@ -32,9 +34,22 @@ $(document).ready(function () {
                         let dia = key
                         dias_da_semana_que_trabalha[`${dia}`] = response[key]
                     break;
+                    case "inicio":
+                        horario_inicio = response[key]
+                    break;
+                    case "fim":
+                        horairo_fim = response[key]
+                    break;
+                    case "tempo_servico":
+                        tempo_servico = response[key]
+                    break;
+                    default:
+                        servicos[response[key].nome] = response[key].valor
+                    break;
                     
                 }
             }
+            
             
         },
         error:function( jqXHR, textStatus, errorThrown){

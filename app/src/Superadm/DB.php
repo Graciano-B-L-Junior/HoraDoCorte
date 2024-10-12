@@ -251,12 +251,11 @@ class DB
 
             
 
-            $response = $dias_da_semana_que_trabalha;
+            $response = $dias_da_semana_que_trabalha + $horario_trabalho + $services;
             
 
             // var_dump($response);
-            $final_response = json_encode($response);
-            var_dump($final_response);
+            $final_response = json_encode($response);            
             return $final_response;
         }
         catch(Exception $e)
