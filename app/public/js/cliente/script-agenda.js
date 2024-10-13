@@ -31,10 +31,27 @@ $(document).ready(function () {
     const barbershop_param = urlParams.get('barbershop')
 
     //Create calendar
-
+    let data_atual = new Date()
     let calendar = new AirDatepicker('#calendar', {
         locale: localePTBR,
-        isMobile: true
+        minDate: data_atual,
+        disableNavWhenOutOfRange: false,
+        onRenderCell({date, cellType, datepicker}){
+            switch(date.getDay())
+            {
+                case 0:
+                case 6:
+                    console.log(date)
+                    return {                        
+                        disabled: true,
+                        classes: 'disabled-class',
+                        attrs: {
+                            title: 'Não autorizado'
+                        },
+                    }
+                break;
+            }
+        }
     })
 
     $.ajax({
@@ -73,7 +90,6 @@ $(document).ready(function () {
                     
                 }
             }
-            console.log(servicos)
             
         },
         error:function( jqXHR, textStatus, errorThrown){
