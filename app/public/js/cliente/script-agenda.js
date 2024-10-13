@@ -32,27 +32,8 @@ $(document).ready(function () {
 
     //Create calendar
     let data_atual = new Date()
-    let calendar = new AirDatepicker('#calendar', {
-        locale: localePTBR,
-        minDate: data_atual,
-        disableNavWhenOutOfRange: false,
-        onRenderCell({date, cellType, datepicker}){
-            switch(date.getDay())
-            {
-                case 0:
-                case 6:
-                    console.log(date)
-                    return {                        
-                        disabled: true,
-                        classes: 'disabled-class',
-                        attrs: {
-                            title: 'Não autorizado'
-                        },
-                    }
-                break;
-            }
-        }
-    })
+    var calendar
+    
 
     $.ajax({
         type: "GET",
@@ -91,6 +72,107 @@ $(document).ready(function () {
                 }
             }
             
+            // let keys_dias_da_semana = Object.keys(dias_da_semana_que_trabalha)
+            // let values_dias_da_semana = Object.values(dias_da_semana_que_trabalha)
+
+            calendar = new AirDatepicker('#calendar', {
+                locale: localePTBR,
+                minDate: data_atual,
+                disableNavWhenOutOfRange: false,
+
+                onRenderCell({date, cellType, datepicker}) {
+                    // return {                        
+                    //     disabled: true,
+                    //     classes: 'disabled-class',
+                    //     attrs: {
+                    //         title: 'Não autorizado'
+                    //     }, 
+                    // }
+                    let result
+                    Object.entries(dias_da_semana_que_trabalha).forEach(([key,value])=>{
+                        
+                        if(key == "dom" && value == "0" && date.getDay() == 0)
+                        {
+                            result = {                        
+                                disabled: true,
+                                classes: 'disabled-class',
+                                attrs: {
+                                    title: 'Não autorizado'
+                                }, 
+                            }
+                            return
+                        }
+                        else if(key == "seg" && value == "0" && date.getDay() == 1)
+                        {
+                            result = {                        
+                                disabled: true,
+                                classes: 'disabled-class',
+                                attrs: {
+                                    title: 'Não autorizado'
+                                }, 
+                            }
+                            return
+                        }
+                        else if(key == "ter" && value == "0" && date.getDay() == 2)
+                        {
+                            result = {                        
+                                disabled: true,
+                                classes: 'disabled-class',
+                                attrs: {
+                                    title: 'Não autorizado'
+                                }, 
+                            }
+                            return
+                        }
+                        else if(key == "qua" && value == "0" && date.getDay() == 3)
+                        {
+                            result = {                        
+                                disabled: true,
+                                classes: 'disabled-class',
+                                attrs: {
+                                    title: 'Não autorizado'
+                                }, 
+                            }
+                            return
+                        }
+                        else if(key == "qui" && value == "0" && date.getDay() == 4)
+                        {
+                            result = {                        
+                                disabled: true,
+                                classes: 'disabled-class',
+                                attrs: {
+                                    title: 'Não autorizado'
+                                }, 
+                            }
+                            return
+                        }
+                        else if(key == "sex" && value == "0" && date.getDay() == 5)
+                        {
+                            result = {                        
+                                disabled: true,
+                                classes: 'disabled-class',
+                                attrs: {
+                                    title: 'Não autorizado'
+                                }, 
+                            }
+                            return
+                        }
+                        else if(key == "sab" && value == "0" && date.getDay() == 6)
+                        {
+                            result = {                        
+                                disabled: true,
+                                classes: 'disabled-class',
+                                attrs: {
+                                    title: 'Não autorizado'
+                                }, 
+                            }
+                            return
+                        }
+                    })
+                    return result;
+                }
+                
+            })
         },
         error:function( jqXHR, textStatus, errorThrown){
             console.log("request failed")
