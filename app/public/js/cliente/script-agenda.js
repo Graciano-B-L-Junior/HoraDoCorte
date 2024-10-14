@@ -19,10 +19,8 @@ $(document).ready(function () {
     let dias_da_semana_que_trabalha = {}
     let servicos = {}
     let horario_inicio = ""
-    let horairo_fim = ""
+    let horario_fim = ""
     let tempo_servico = ""
-
-
     //get full url
     const queryString = window.location.search;
 
@@ -34,7 +32,9 @@ $(document).ready(function () {
     let data_atual = new Date()
     var calendar
     
+    $(".alerta").css('display','none')
 
+    //CRIA TODOS OS ELEMENTOS DO FORMULÁRIO
     $.ajax({
         type: "GET",
         url: "/api/barbershop_data",
@@ -60,7 +60,7 @@ $(document).ready(function () {
                         horario_inicio = response[key]
                     break;
                     case "fim":
-                        horairo_fim = response[key]
+                        horario_fim = response[key]
                     break;
                     case "tempo_servico":
                         tempo_servico = response[key]
@@ -71,23 +71,43 @@ $(document).ready(function () {
                     
                 }
             }
-            
-            // let keys_dias_da_semana = Object.keys(dias_da_semana_que_trabalha)
-            // let values_dias_da_semana = Object.values(dias_da_semana_que_trabalha)
+            console.log(servicos)
+
+            //CRIA O SELECT COM AS OPÇÕES DE SERVIÇO
+            let select_form = $("#service")
+            Object.entries(servicos).forEach(([key,value])=>{
+                select_form.append(`<option name="${key}">${key} --> ${value} reais</option>`);
+            })
+
+            //CRIA O SELECT COM AS OPÇÕES DE HORARIO DE SERVIÇO
+            horario_inicio = horario_inicio.split(":")
+            horario_fim = horario_fim.split(":")
+            let date_aux = new Date(Date.now())
+            horario_inicio = new Date(date_aux.getFullYear(),date_aux.getMonth(),date_aux.getDate(),horario_inicio[0],horario_inicio[1])
+            horario_fim = new Date(date_aux.getFullYear(),date_aux.getMonth(),date_aux.getDate(),horario_fim[0],horario_fim[1])
+
+
+            let horario = $("#horario")
+            console.log(horario_inicio)
+            while(horario_inicio <= horario_fim)
+            {
+                let horario_aux = String(horario_inicio.getHours()).padStart(2,'0')
+                let minutos_aux = String(horario_inicio.getMinutes()).padStart(2,'0')
+                horario.append(`<option value="${horario_aux}:${minutos_aux}:00">${horario_aux}:${minutos_aux}:00</option>`)
+                horario_inicio.setMinutes(horario_inicio.getMinutes() + parseInt(tempo_servico))
+            }
+            console.log(horario_inicio)
 
             calendar = new AirDatepicker('#calendar', {
                 locale: localePTBR,
                 minDate: data_atual,
                 disableNavWhenOutOfRange: false,
-
+                onSelect({date}){
+                    console.log(date)
+                    $("#data-reservada").val(date.toISOString())
+                },
                 onRenderCell({date, cellType, datepicker}) {
-                    // return {                        
-                    //     disabled: true,
-                    //     classes: 'disabled-class',
-                    //     attrs: {
-                    //         title: 'Não autorizado'
-                    //     }, 
-                    // }
+                    
                     let result
                     Object.entries(dias_da_semana_que_trabalha).forEach(([key,value])=>{
                         

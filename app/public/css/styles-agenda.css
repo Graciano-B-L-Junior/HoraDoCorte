@@ -22,3 +22,10 @@
     background-color: var(--item);
     color: #1f1f1f;
 }
+
+select
+{
+    color: #1f1f1f;
+    font-size: 20px;
+}
+
