@@ -34,7 +34,9 @@ $(document).ready(function () {
     
     $(".alerta").css('display','none')
 
-    //CRIA TODOS OS ELEMENTOS DO FORMULÁRIO
+    $("#cellphone").mask("(00)00000-0000")
+
+    //create all form elements
     $.ajax({
         type: "GET",
         url: "/api/barbershop_data",
@@ -71,7 +73,6 @@ $(document).ready(function () {
                     
                 }
             }
-            console.log(servicos)
 
             //CRIA O SELECT COM AS OPÇÕES DE SERVIÇO
             let select_form = $("#service")
@@ -88,7 +89,6 @@ $(document).ready(function () {
 
 
             let horario = $("#horario")
-            console.log(horario_inicio)
             while(horario_inicio <= horario_fim)
             {
                 let horario_aux = String(horario_inicio.getHours()).padStart(2,'0')
@@ -96,14 +96,12 @@ $(document).ready(function () {
                 horario.append(`<option value="${horario_aux}:${minutos_aux}:00">${horario_aux}:${minutos_aux}:00</option>`)
                 horario_inicio.setMinutes(horario_inicio.getMinutes() + parseInt(tempo_servico))
             }
-            console.log(horario_inicio)
 
             calendar = new AirDatepicker('#calendar', {
                 locale: localePTBR,
                 minDate: data_atual,
                 disableNavWhenOutOfRange: false,
                 onSelect({date}){
-                    console.log(date)
                     $("#data-reservada").val(date.toISOString())
                 },
                 onRenderCell({date, cellType, datepicker}) {
@@ -198,4 +196,22 @@ $(document).ready(function () {
             console.log("request failed")
         }
     });
+
+    $("#submit").on('click',function(e){
+        e.preventDefault()
+
+        let form_data = new FormData(document.querySelector('#booking-form'))
+        let is_form_ok = true
+        
+        for(const key_value of form_data.entries())
+        {
+            if(key_value[1]=="" || key_value[1 == null])
+            {
+                is_form_ok = false
+                break
+            }
+        }
+        
+        is_form_ok ?  $(".alerta").css('display','none') :  $(".alerta").css('display','block')
+    })
 });

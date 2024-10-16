@@ -17,18 +17,32 @@
 </head>
 <body>
     <h1>Agende seu corte com ...</h1>
-    <form method="post" class="agenda-form">
+    <form method="post" class="agenda-form" id="booking-form">
         <div id="calendar"></div>
         <input type="hidden" name="date" id="data-reservada" value="">
+
         <p>Selecione o serviço</p>
         <select name="service" id="service">
-            
         </select>
+
         <p>Selecione o horário</p>
         <select name="horario" id="horario">
-
         </select>
+
+        <label for="first_name">Digite seu nome</label>
+        <input type="text" name="first_name" id="first_name">
+
+        <label for="last_name">Digite seu sobrenome</label>
+        <input type="text" name="last_name" id="last_name">
+
+        <label for="cellphone">Digite seu número</label>
+        <input type="text" name="cellphone" id="cellphone" placeholder="EX: (85)9xxxx-xxxx">
+
+        <label for="client_email">Digite seu e-mail</label>
+        <input type="email" name="client_email" id="client_email">
+
         <input type="submit" value="Reservar" id="submit">
+        
     </form>
     <div class="alerta">
         <p>Preencha todos os campos corretamente</p>
